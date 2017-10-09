@@ -12,35 +12,35 @@ using namespace std;
 typedef list<int> LISTINT;
 typedef list<string> LISTSTRING;
 
-string DepartmentMember[20][15];//��Ӧ��ʮ�����ţ������ڲ����㲻�������Ӧѧ�� 
-string unluckyStrudent [300]; //��Ӧѧ�ţ�Ϊ�㲻��� 
+string DepartmentMember[20][15];                                                                   //对应二十个部门，部门内部有零不输出，对应学号 
+string unluckyStrudent [300];                                                                      //对应学号，为零不输出 
 #include "cJSON.h"
 #include "cJSON_Utils.h"
 
-struct Student
+struct Student                                                                                     //定义学生结构体
 {
-	LISTSTRING FTDay;
-	LISTINT FTStart;
-	LISTINT FTEnd;
-	string StudentNo;
-	string ApliDepart[5];
-	LISTSTRING Tag;
+	LISTSTRING FTDay;                                                                              //定义学生空闲时间是星期几
+	LISTINT FTStart;                                                                               //定义学生空闲时间的开始时间   
+	LISTINT FTEnd;                                                                                 //定义学生空闲时间的结束时间
+	string StudentNo;                                                                              //定义学生的学号
+	string ApliDepart[5];                                                                          //定义学生报的部门
+	LISTSTRING Tag;                                                                                //定义学生的兴趣标签
 };
 
-struct Department
+struct Department                                                                                  //定义部门结构体
 {
-	LISTSTRING ESDay;
-	LISTINT ESStart;
-	LISTINT ESEnd;
-	int MemberLimit;
-	string DepartNO;
-	LISTSTRING Tag;
+	LISTSTRING ESDay;                                                                              //定义部门活动时间是星期几
+	LISTINT ESStart;                                                                               //定义部门活动时间的开始时间
+	LISTINT ESEnd;                                                                                 //定义部门活动的结束时间
+	int MemberLimit;                                                                               //定义部门人数限制
+	string DepartNO;                                                                               //定义部门号
+	LISTSTRING Tag;                                                                                //定义部门特点标签
 };
-//
-Student stu[300];
-Department dep[20];
+Student stu[300];                                                                                  
+Department dep[20];                                                                         
 
-struct StudentScore{
+struct StudentScore
+{
 	double tagScore;
 	double otherScore;
 	int tag;
@@ -56,7 +56,8 @@ int StringToInt(string s)
 	return i;
 }
 
-bool cmp(StudentScore a,StudentScore b){
+bool cmp(StudentScore a,StudentScore b)
+{
 	if (a.tagScore == b.tagScore){
 		return a.otherScore > b.otherScore;
 	}
@@ -65,7 +66,7 @@ bool cmp(StudentScore a,StudentScore b){
 	}
 }
 
-void GetTimeS(int i,string s)
+void GetTimeS(int i,string s)                                                                      //从学生空闲时间的字符串中获取星期几，开始和结束时间
 {
 	int k;
 	int first=0;
@@ -90,7 +91,7 @@ void GetTimeS(int i,string s)
 	}
 }
 
-void GetTimeD(int i,string s)
+void GetTimeD(int i,string s)                                                                      //从部门活动时间的字符串中获取星期几，开始和结束时间
 {
 	int k;
 	int first=0;
@@ -115,23 +116,22 @@ void GetTimeD(int i,string s)
 	}
 }
 
-studentScore departmentMemberTemp[20][300]; 
 
 int main()
 {
 	int i,j;
 	string d;
     ifstream infile;
-    infile.open("input_data.txt");
+    infile.open("input_data.txt");                                                                 //打开输入文件
     string s;
-	while(getline(infile,s))
+	while(getline(infile,s))                                                                       //将文件中的内容全部转为字符串               
 	{
 		d=d+s;
 	}
-	cJSON* json = cJSON_Parse(d.c_str());
+	cJSON* json = cJSON_Parse(d.c_str());                                                          //利用cJSON读取字符串里对应键值的数值
 	if (json!=NULL)
 	{
-		cJSON* temp = cJSON_GetObjectItem(json, "students");
+		cJSON* temp = cJSON_GetObjectItem(json, "students");                                       //读取学生的数据存入结构体数组       
 		if (temp!=NULL)
 		{
 			i=0;
@@ -184,7 +184,7 @@ int main()
 			}
 		}
 
-		temp = cJSON_GetObjectItem(json, "departments");
+		temp = cJSON_GetObjectItem(json, "departments");                                           //读取部门的数据存入结构体数组
 		if(temp!=NULL)
 		{
 			int i=0;
@@ -228,12 +228,9 @@ int main()
 			}
 		}
 	}
-	// ��ȡ��������ʱ����stu���飡 
+	//读取结束，临时变量stu数组！ 
 	 StudentScore stu[20][300];
-	 void put_list(INTLIST list)  
-{   
-    INTLIST::iterator plist;   
-}   
+	 
 //	stu[1].tagScore = 100;
 //	stu[1].otherScore = 101111;
 //	stu[2].tagScore = 100;
@@ -243,5 +240,7 @@ int main()
 //	sort(stu,stu+3,cmp);
 //	cout << stu[0].tagScore<< " "<< stu[1].tagScore<<" "<< stu[2].tagScore<<endl;
 //	cout << stu[0].otherScore<< " "<< stu[1].otherScore<<" "<< stu[2].otherScore<<endl;
+
+
 	return 0;
 }
