@@ -36,6 +36,7 @@ struct Department
 	string DepartNO;
 	LISTSTRING Tag;
 };
+//
 Student stu[300];
 Department dep[20];
 
@@ -114,6 +115,7 @@ void GetTimeD(int i,string s)
 	}
 }
 
+studentScore departmentMemberTemp[20][300]; 
 
 int main()
 {
@@ -228,7 +230,10 @@ int main()
 	}
 	// 读取结束，临时变量stu数组！ 
 	 StudentScore stu[20][300];
-	 
+	 void put_list(INTLIST list)  
+{   
+    INTLIST::iterator plist;   
+}   
 //	stu[1].tagScore = 100;
 //	stu[1].otherScore = 101111;
 //	stu[2].tagScore = 100;
@@ -238,7 +243,5 @@ int main()
 //	sort(stu,stu+3,cmp);
 //	cout << stu[0].tagScore<< " "<< stu[1].tagScore<<" "<< stu[2].tagScore<<endl;
 //	cout << stu[0].otherScore<< " "<< stu[1].otherScore<<" "<< stu[2].otherScore<<endl;
-
-
 	return 0;
 }
