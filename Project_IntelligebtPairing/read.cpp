@@ -5,11 +5,15 @@
 #include<cstring>
 #include<fstream> 
 #include<iostream>
+#include<algorithm>
+#include<set>
 using namespace std;
 
 typedef list<int> LISTINT;
 typedef list<string> LISTSTRING;
 
+string DepartmentMember[20][15];//对应二十个部门，部门内部有零不输出，对应学号 
+string unluckyStrudent [300]; //对应学号，为零不输出 
 #include "cJSON.h"
 #include "cJSON_Utils.h"
 
@@ -35,6 +39,13 @@ struct Department
 Student stu[300];
 Department dep[20];
 
+struct StudentScore{
+	double tagScore;
+	double otherScore;
+	int tag;
+	string StudentNo;
+};
+
 int StringToInt(string s)
 {
 	stringstream ss;
@@ -44,6 +55,14 @@ int StringToInt(string s)
 	return i;
 }
 
+bool cmp(StudentScore a,StudentScore b){
+	if (a.tagScore == b.tagScore){
+		return a.otherScore > b.otherScore;
+	}
+	else{
+		return a.tagScore > b.tagScore;
+	}
+}
 
 void GetTimeS(int i,string s)
 {
@@ -207,5 +226,19 @@ int main()
 			}
 		}
 	}
+	// 读取结束，临时变量stu数组！ 
+	 StudentScore stu[20][300];
+	 
+//	stu[1].tagScore = 100;
+//	stu[1].otherScore = 101111;
+//	stu[2].tagScore = 100;
+//	stu[2].otherScore = 101;
+//	stu[0].tagScore = 103;
+//	stu[0].otherScore = 10;
+//	sort(stu,stu+3,cmp);
+//	cout << stu[0].tagScore<< " "<< stu[1].tagScore<<" "<< stu[2].tagScore<<endl;
+//	cout << stu[0].otherScore<< " "<< stu[1].otherScore<<" "<< stu[2].otherScore<<endl;
+
+
 	return 0;
 }
