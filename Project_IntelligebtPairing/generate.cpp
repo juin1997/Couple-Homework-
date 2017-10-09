@@ -7,17 +7,18 @@
 #include<iostream>
 using namespace std;
 string Week[7] = {"Mon.","Tues.","Wed.","Thur.","Fri.","Sat.","Sun."};
-string Tag[10] = {"study","film","English","music","reading","chess","football","dance","programming","basketball"};
-int FirstStuNo = 31502001;
+string Tag[10] = {"study","film","English","music","reading","chess",                              
+"football","dance","programming","basketball"};                                                    //兴趣标签
+int firstStuNo = 31502001;
 
-string ToString(int val)/将int类型转换为string类型
+string ToString(int val)                                                                           //将int类型转换为string类型
 {
     stringstream stream;
     stream << val;
     return stream.str();
 }
 
-int Rand(int num1,int num2)//生成num1到num2之间的随机数 
+int Rand(int num1,int num2)                                                                       //生成num1到num2之间的随机数 
 {
 	int r;
 	while(1)
@@ -29,120 +30,128 @@ int Rand(int num1,int num2)//生成num1到num2之间的随机数
 
 int main()
 {
-	srand(time(NULL));
-    int i,Stu,TLoop,TWeek,TStart,AppliDepart,AppliDepartNum,DepartNum,TagsNum,Tags,TagStart;
-    string TString;
+	srand(time(NULL));                                                                             //根据时间生成随机数使随机数尽量不重复，让数据更多样化
+	int i,stu,                                                                                     //定义学生循环的变量
+	tLoop,                                                                                         //定义循环生成时间的变量
+	tWeek,                                                                                         //定义生成时间是星期几的变量
+	tStart,                                                                                        //定义时间开始时间的变量
+	appliDepart,                                                                                   //定义学生报的部门循环的变量
+	appliDepartNum,                                                                                //定义学生报的部号
+	depart,                                                                                        //定义部门循环的变量
+	tags,                                                                                          //定义标签循环的变量
+	tagStart;                                                                                      //定义开始标签的变量
+    string tString;                                                                                //定义用来输出的字符串
 	ofstream fout("input_data.txt");
     if(fout)
     {
         fout<<"{"<<endl;
 		fout<<"    \"students\": ["<<endl;
-		for(Stu=0;Stu<300;Stu++)
+		for(stu=0;stu<300;stu++)
 		{
 			fout<<"        {"<<endl;
 			fout<<"            \"free_time\": ["<<endl;
-			i=Rand(2,8); 
-			for(TLoop=0;TLoop<i;TLoop++)
+			i=Rand(2,8);                                                                           
+			for(tLoop=0;tLoop<i;tLoop++)
 			{
-				if(TLoop==0) TWeek=Rand(0,7);
-				else TWeek=(TWeek+1)%7;
-				TString=Week[TWeek];
-			    TStart=Rand(8,22);
-				TString+=ToString(TStart);
-				TString+=":00~";
-				TString+=ToString(Rand(TStart+1,24));
-				TString+=":00\"";
-				if(TLoop==i-1) 
-					fout<<"                \""+TString<<endl;
+				if(tLoop==0) tWeek=Rand(0,7);
+				else tWeek=(tWeek+1)%7;
+				tString=Week[tWeek];
+			    tStart=Rand(8,22);                                                                 //活动开始时间限制在8点到22点
+				tString+=ToString(tStart);
+				tString+=":00~";
+				tString+=ToString(Rand(tStart+1,24));                                              //活动结束时间限制在24点
+				tString+=":00\"";
+				if(tLoop==i-1) 
+					fout<<"                \""+tString<<endl;
 				else
-				fout<<"                \""+TString+","<<endl;
+				fout<<"                \""+tString+","<<endl;
 			}
 			fout<<"            ],"<<endl;
-			FirstStuNo++;
-			fout<<"            \"student_no\":\"0"+ToString(FirstStuNo)+"\","<<endl;
+			firstStuNo++;
+			fout<<"            \"student_no\":\"0"+ToString(firstStuNo)+"\","<<endl;
 			fout<<"            \"applications_department\": ["<<endl;
 			i=Rand(1,6);
-			for(AppliDepart=0;AppliDepart<i;AppliDepart++)
+			for(appliDepart=0;appliDepart<i;appliDepart++)
 			{
-				AppliDepartNum=Rand(1,21);
-				if(AppliDepartNum<10)
+				appliDepartNum=Rand(1,21);
+				if(appliDepartNum<10)
 				{
-					if(AppliDepart==i-1)
-					    fout<<"                \"D00"+ToString(AppliDepartNum)+"\""<<endl;
+					if(appliDepart==i-1)
+					    fout<<"                \"D00"+ToString(appliDepartNum)+"\""<<endl;
                     else
-					    fout<<"                \"D00"+ToString(AppliDepartNum)+"\","<<endl;
+					    fout<<"                \"D00"+ToString(appliDepartNum)+"\","<<endl;
 				}
 				else
 				{
-					if(AppliDepart==i-1)
-					    fout<<"                \"D0"+ToString(AppliDepartNum)+"\""<<endl;
+					if(appliDepart==i-1)
+					    fout<<"                \"D0"+ToString(appliDepartNum)+"\""<<endl;
                     else
-					    fout<<"                \"D0"+ToString(AppliDepartNum)+"\","<<endl;
+					    fout<<"                \"D0"+ToString(appliDepartNum)+"\","<<endl;
 				}
 			}
 			fout<<"            ],"<<endl;
 			fout<<"            \"tags\": ["<<endl;
 			i=Rand(2,10);
-			for(Tags=0;Tags<i;Tags++)
+			for(tags=0;tags<i;tags++)
 			{
-				if(Tags==0) 
-				    TagStart=Rand(0,10);
+				if(tags==0) 
+				    tagStart=Rand(0,10);
 				else
-					TagStart=(TagStart+1)%10; 
-				if(Tags==i-1)
-				    fout<<"                \""+Tag[TagStart]+"\""<<endl;
+					tagStart=(tagStart+1)%10; 
+				if(tags==i-1)
+				    fout<<"                \""+Tag[tagStart]+"\""<<endl;
 				else
-				fout<<"                \""+Tag[TagStart]+"\","<<endl;
+				fout<<"                \""+Tag[tagStart]+"\","<<endl;
 			}
 			fout<<"            ]"<<endl;
-			if(Stu==299) 
+			if(stu==299) 
 			    fout<<"        }"<<endl;
 			else
 			    fout<<"        },"<<endl;
 		}
 		fout<<"    ],"<<endl;
 		fout<<"    \"departments\": ["<<endl;
-		for(DepartNum=1;DepartNum<=20;DepartNum++)
+		for(depart=1;depart<=20;depart++)
 		{
 			fout<<"        {"<<endl;
 			fout<<"            \"event_schedules\": ["<<endl;
 			i=Rand(2,8); 
-			for(TLoop=0;TLoop<i;TLoop++)
+			for(tLoop=0;tLoop<i;tLoop++)
 			{
-				if(TLoop==0) TWeek=Rand(0,7);
-				else TWeek=(TWeek+1)%7;
-				TString=Week[TWeek];
-			    TStart=Rand(8,22);
-				TString+=ToString(TStart);
-				TString+=":00~";
-				TString+=ToString(Rand(TStart+1,24));
-				TString+=":00\"";
-				if(TLoop==i-1) 
-					fout<<"                \""+TString<<endl;
+				if(tLoop==0) tWeek=Rand(0,7);
+				else tWeek=(tWeek+1)%7;
+				tString=Week[tWeek];
+			    tStart=Rand(8,22);
+				tString+=ToString(tStart);
+				tString+=":00~";
+				tString+=ToString(Rand(tStart+1,24));
+				tString+=":00\"";
+				if(tLoop==i-1) 
+					fout<<"                \""+tString<<endl;
 				else
-				fout<<"                \""+TString+","<<endl;
+				fout<<"                \""+tString+","<<endl;
 			}
 			fout<<"            ],"<<endl;
 			fout<<"            \"member_limit\":"+ToString(Rand(10,16))+","<<endl;
-			if (DepartNum<9)
-			    fout<<"            \"department_no\": \"D00"+ToString(DepartNum)+"\","<<endl;
+			if (depart<9)
+			    fout<<"            \"department_no\": \"D00"+ToString(depart)+"\","<<endl;
 			else
-			    fout<<"            \"department_no\": \"D0"+ToString(DepartNum)+"\","<<endl;
+			    fout<<"            \"department_no\": \"D0"+ToString(depart)+"\","<<endl;
 			fout<<"            \"tags\": ["<<endl;
 			i=Rand(2,10);
-			for(Tags=0;Tags<i;Tags++)
+			for(tags=0;tags<i;tags++)
 			{
-				if(Tags==0) 
-				    TagStart=Rand(0,10);
+				if(tags==0) 
+				    tagStart=Rand(0,10);
 				else
-					TagStart=(TagStart+1)%10; 
-				if(Tags==i-1)
-				    fout<<"                \""+Tag[TagStart]+"\""<<endl;
+					tagStart=(tagStart+1)%10; 
+				if(tags==i-1)
+				    fout<<"                \""+Tag[tagStart]+"\""<<endl;
 				else
-				fout<<"                \""+Tag[TagStart]+"\","<<endl;
+				fout<<"                \""+Tag[tagStart]+"\","<<endl;
 			}
 			fout<<"            ]"<<endl;
-			if(DepartNum==20) 
+			if(depart==20) 
 			    fout<<"        }"<<endl;
 			else
 			    fout<<"        },"<<endl;		
